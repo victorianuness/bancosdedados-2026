@@ -1,0 +1,209 @@
+Microsoft Windows [versão 6.3.9600]
+(c) 2013 Microsoft Corporation. Todos os direitos reservados.
+
+C:\Users\ETEC>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 46
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| produtos           |
+| test               |
++--------------------+
+6 rows in set (0.001 sec)
+
+MariaDB [(none)]> use produtos;
+Database changed
+MariaDB [produtos]> describe produtos;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacadastro  | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.036 sec)
+
+MariaDB [produtos]> alter table produtos change datacadastro datacad date not nu
+ll;
+Query OK, 0 rows affected (0.135 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe produtos;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.880 sec)
+
+MariaDB [produtos]> describe categoria;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| iddacategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria     | varchar(100) | NO   |     | NULL    |                |
+| descricao     | varchar(225) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.031 sec)
+
+MariaDB [produtos]> alter table categoria drop column,
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> alter table categoria drop column descricao describe categoria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '
+
+
+
+
+
+
+
+
+
+alter table categoria drop column descricao describe categoria' at line 1
+MariaDB [produtos]> alter table categoria drop descricao;
+Query OK, 0 rows affected (0.045 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| iddacategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria     | varchar(100) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.033 sec)
+
+MariaDB [produtos]> alter table categoria add descricao add descricao varchar(22
+5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near 'add
+ descricao varchar(225)' at line 1
+MariaDB [produtos]> alter table categoria add descricao varchar(225);
+Query OK, 0 rows affected (0.051 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [produtos]> describe categoria;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| iddacategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria     | varchar(100) | NO   |     | NULL    |                |
+| descricao     | varchar(225) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.049 sec)
+
+MariaDB [produtos]> describe produtos;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.032 sec)
+
+MariaDB [produtos]> rename table produtos to itens;
+Query OK, 0 rows affected (0.106 sec)
+
+MariaDB [produtos]> use itens
+ERROR 1049 (42000): Unknown database 'itens'
+MariaDB [produtos]> describe itens;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (1.915 sec)
+
+MariaDB [produtos]>
+MariaDB [produtos]> describe itens;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.032 sec)
+
+MariaDB [produtos]> describe categoria;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| iddacategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria     | varchar(100) | NO   |     | NULL    |                |
+| descricao     | varchar(225) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.030 sec)
+
+MariaDB [produtos]> insert into itens(iddacategoria,nomeprodutopreco,qntde,datac
+ad,ativo)values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '' a
+t line 1
+MariaDB [produtos]> insert into itens(iddacategoria,nomeproduto,preco,qntde,data
+cad,ativo)values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '' a
+t line 1
+MariaDB [produtos]> insert into categoria(
+    -> ,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '' a
+t line 2
+MariaDB [produtos]> insert into categoria(categoria,descricao)values
+    -> ('roupas de verão','regata,vestidos,shorta, etc...');
+Query OK, 1 row affected (0.036 sec)
+
+MariaDB [produtos]>
