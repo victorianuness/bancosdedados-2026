@@ -1,0 +1,300 @@
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> describe produtos;
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use produtos;
+ERROR 1049 (42000): Unknown database 'produtos'
+MariaDB [(none)]> use itens;
+ERROR 1049 (42000): Unknown database 'itens'
+MariaDB [(none)]> use produto;
+ERROR 1049 (42000): Unknown database 'produto'
+MariaDB [(none)]> use loja;
+Database changed
+MariaDB [loja]> describe loja;
+ERROR 1146 (42S02): Table 'loja.loja' doesn't exist
+MariaDB [loja]> describe produtos;
+ERROR 1146 (42S02): Table 'loja.produtos' doesn't exist
+MariaDB [loja]> describe itens;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.033 sec)
+
+MariaDB [loja]> describe categoria;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| iddacategoria | int(11)      | NO   | PRI | NULL    | auto_increment |
+| categoria     | varchar(100) | NO   |     | NULL    |                |
+| descricao     | varchar(225) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.030 sec)
+
+MariaDB [loja]> select * from itens;
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+
+| idproduto | iddacategoria | nomeproduto                     | preco  | qntde |
+ datacad    | ativo |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+
+|         1 |             1 | Vestido de flor sem mangas      |  85.00 |    15 |
+ 2026-05-30 | ?     |
+|         2 |             1 | Regata Roxa com estampa de gato |  50.00 |    25 |
+ 2026-05-30 | ?     |
+|         3 |             1 | Shorts Jeans                    | 110.00 |    55 |
+ 2026-05-30 | ?     |
+|         4 |             2 | Cachecol Rosa                   |  50.00 |    10 |
+ 2026-05-30 | ?     |
+|         5 |             2 | Meias estampadas                |  10.00 |    20 |
+ 2026-05-30 | ?     |
+|         6 |             2 | Calça Moletom                   |  60.00 |    35 |
+ 2026-05-30 | ?     |
+|         7 |             3 | Terno azul marinho              | 170.00 |    40 |
+ 2026-05-30 | ?     |
+|         8 |             3 | Blazer Vinho                    | 200.00 |    30 |
+ 2026-05-30 | ?     |
+|         9 |             3 | Camisa listrada de botão        |  30.00 |    15 |
+ 2026-05-30 | ?     |
+|        10 |             4 | Top Preto                       |  35.00 |    25 |
+ 2026-05-30 | ?     |
+|        11 |             4 | legging                         |  23.00 |    30 |
+ 2026-05-30 | ?     |
+|        12 |             4 | Shorts de corrida               |  15.00 |    10 |
+ 2026-05-30 | ?     |
+|        13 |             5 | Tênis de corrida                | 250.00 |    30 |
+ 2026-05-30 | ?     |
+|        14 |             5 | Chinelos                        |  25.00 |    25 |
+ 2026-05-30 | ?     |
+|        15 |             5 | Sapatilha Vermelha              |  75.00 |    45 |
+ 2026-05-30 | ?     |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+
+15 rows in set (0.001 sec)
+
+MariaDB [loja]> alter table itens add marca(150) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that
+corresponds to your MariaDB server version for the right syntax to use near '(15
+0) not null' at line 1
+MariaDB [loja]> alter table itens add marca varchar(150) not null;
+Query OK, 0 rows affected (0.131 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [loja]> describe itens;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| idproduto     | int(11)       | NO   | PRI | NULL    | auto_increment |
+| iddacategoria | int(11)       | YES  | MUL | NULL    |                |
+| nomeproduto   | varchar(100)  | NO   |     | NULL    |                |
+| preco         | decimal(10,2) | NO   |     | NULL    |                |
+| qntde         | int(11)       | NO   |     | NULL    |                |
+| datacad       | date          | NO   |     | NULL    |                |
+| ativo         | bit(1)        | NO   |     | NULL    |                |
+| marca         | varchar(150)  | NO   |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+8 rows in set (0.034 sec)
+
+MariaDB [loja]> select *from itens;
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+| idproduto | iddacategoria | nomeproduto                     | preco  | qntde |
+ datacad    | ativo | marca |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+|         1 |             1 | Vestido de flor sem mangas      |  85.00 |    15 |
+ 2026-05-30 | ?     |       |
+|         2 |             1 | Regata Roxa com estampa de gato |  50.00 |    25 |
+ 2026-05-30 | ?     |       |
+|         3 |             1 | Shorts Jeans                    | 110.00 |    55 |
+ 2026-05-30 | ?     |       |
+|         4 |             2 | Cachecol Rosa                   |  50.00 |    10 |
+ 2026-05-30 | ?     |       |
+|         5 |             2 | Meias estampadas                |  10.00 |    20 |
+ 2026-05-30 | ?     |       |
+|         6 |             2 | Calça Moletom                   |  60.00 |    35 |
+ 2026-05-30 | ?     |       |
+|         7 |             3 | Terno azul marinho              | 170.00 |    40 |
+ 2026-05-30 | ?     |       |
+|         8 |             3 | Blazer Vinho                    | 200.00 |    30 |
+ 2026-05-30 | ?     |       |
+|         9 |             3 | Camisa listrada de botão        |  30.00 |    15 |
+ 2026-05-30 | ?     |       |
+|        10 |             4 | Top Preto                       |  35.00 |    25 |
+ 2026-05-30 | ?     |       |
+|        11 |             4 | legging                         |  23.00 |    30 |
+ 2026-05-30 | ?     |       |
+|        12 |             4 | Shorts de corrida               |  15.00 |    10 |
+ 2026-05-30 | ?     |       |
+|        13 |             5 | Tênis de corrida                | 250.00 |    30 |
+ 2026-05-30 | ?     |       |
+|        14 |             5 | Chinelos                        |  25.00 |    25 |
+ 2026-05-30 | ?     |       |
+|        15 |             5 | Sapatilha Vermelha              |  75.00 |    45 |
+ 2026-05-30 | ?     |       |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+15 rows in set (0.001 sec)
+
+MariaDB [loja]> update itens set marca = 'Zara' where idproduto=1;
+Query OK, 1 row affected (0.037 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> select * from itens;
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+| idproduto | iddacategoria | nomeproduto                     | preco  | qntde |
+ datacad    | ativo | marca |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+|         1 |             1 | Vestido de flor sem mangas      |  85.00 |    15 |
+ 2026-05-30 | ?     | Zara  |
+|         2 |             1 | Regata Roxa com estampa de gato |  50.00 |    25 |
+ 2026-05-30 | ?     |       |
+|         3 |             1 | Shorts Jeans                    | 110.00 |    55 |
+ 2026-05-30 | ?     |       |
+|         4 |             2 | Cachecol Rosa                   |  50.00 |    10 |
+ 2026-05-30 | ?     |       |
+|         5 |             2 | Meias estampadas                |  10.00 |    20 |
+ 2026-05-30 | ?     |       |
+|         6 |             2 | Calça Moletom                   |  60.00 |    35 |
+ 2026-05-30 | ?     |       |
+|         7 |             3 | Terno azul marinho              | 170.00 |    40 |
+ 2026-05-30 | ?     |       |
+|         8 |             3 | Blazer Vinho                    | 200.00 |    30 |
+ 2026-05-30 | ?     |       |
+|         9 |             3 | Camisa listrada de botão        |  30.00 |    15 |
+ 2026-05-30 | ?     |       |
+|        10 |             4 | Top Preto                       |  35.00 |    25 |
+ 2026-05-30 | ?     |       |
+|        11 |             4 | legging                         |  23.00 |    30 |
+ 2026-05-30 | ?     |       |
+|        12 |             4 | Shorts de corrida               |  15.00 |    10 |
+ 2026-05-30 | ?     |       |
+|        13 |             5 | Tênis de corrida                | 250.00 |    30 |
+ 2026-05-30 | ?     |       |
+|        14 |             5 | Chinelos                        |  25.00 |    25 |
+ 2026-05-30 | ?     |       |
+|        15 |             5 | Sapatilha Vermelha              |  75.00 |    45 |
+ 2026-05-30 | ?     |       |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+-------+
+15 rows in set (0.001 sec)
+
+MariaDB [loja]> update itens set marca = 'c&a' where idproduto=2;
+Query OK, 1 row affected (0.032 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Renner' where idproduto=3;
+Query OK, 1 row affected (0.020 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Riachuelo' where idproduto=4;
+Query OK, 1 row affected (0.021 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Pernambucanas' where idproduto=5;
+Query OK, 1 row affected (0.020 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'c&a' where idproduto=6;
+Query OK, 1 row affected (0.024 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Camisaria FMW' where idproduto=7;
+Query OK, 1 row affected (0.028 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Channel' where idproduto=8;
+Query OK, 1 row affected (0.270 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Prada' where idproduto=9;
+Query OK, 1 row affected (0.025 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Nike' where idproduto=9;
+Query OK, 1 row affected (0.027 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Prada' where idproduto=9;
+Query OK, 1 row affected (0.024 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Nike' where idproduto=10;
+Query OK, 1 row affected (0.019 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Adidas' where idproduto=11;
+Query OK, 1 row affected (0.036 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Centauro' where idproduto=12;
+Query OK, 1 row affected (0.021 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Puma' where idproduto=13;
+Query OK, 1 row affected (0.036 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Havaianas' where idproduto=14;
+Query OK, 1 row affected (0.019 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> update itens set marca = 'Constance' where idproduto=15;
+Query OK, 1 row affected (0.022 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [loja]> select * from itens;
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+---------------+
+| idproduto | iddacategoria | nomeproduto                     | preco  | qntde |
+ datacad    | ativo | marca         |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+---------------+
+|         1 |             1 | Vestido de flor sem mangas      |  85.00 |    15 |
+ 2026-05-30 | ?     | Zara          |
+|         2 |             1 | Regata Roxa com estampa de gato |  50.00 |    25 |
+ 2026-05-30 | ?     | c&a           |
+|         3 |             1 | Shorts Jeans                    | 110.00 |    55 |
+ 2026-05-30 | ?     | Renner        |
+|         4 |             2 | Cachecol Rosa                   |  50.00 |    10 |
+ 2026-05-30 | ?     | Riachuelo     |
+|         5 |             2 | Meias estampadas                |  10.00 |    20 |
+ 2026-05-30 | ?     | Pernambucanas |
+|         6 |             2 | Calça Moletom                   |  60.00 |    35 |
+ 2026-05-30 | ?     | c&a           |
+|         7 |             3 | Terno azul marinho              | 170.00 |    40 |
+ 2026-05-30 | ?     | Camisaria FMW |
+|         8 |             3 | Blazer Vinho                    | 200.00 |    30 |
+ 2026-05-30 | ?     | Channel       |
+|         9 |             3 | Camisa listrada de botão        |  30.00 |    15 |
+ 2026-05-30 | ?     | Prada         |
+|        10 |             4 | Top Preto                       |  35.00 |    25 |
+ 2026-05-30 | ?     | Nike          |
+|        11 |             4 | legging                         |  23.00 |    30 |
+ 2026-05-30 | ?     | Adidas        |
+|        12 |             4 | Shorts de corrida               |  15.00 |    10 |
+ 2026-05-30 | ?     | Centauro      |
+|        13 |             5 | Tênis de corrida                | 250.00 |    30 |
+ 2026-05-30 | ?     | Puma          |
+|        14 |             5 | Chinelos                        |  25.00 |    25 |
+ 2026-05-30 | ?     | Havaianas     |
+|        15 |             5 | Sapatilha Vermelha              |  75.00 |    45 |
+ 2026-05-30 | ?     | Constance     |
++-----------+---------------+---------------------------------+--------+-------+
+------------+-------+---------------+
+15 rows in set (0.000 sec)
+
+MariaDB [loja]>
